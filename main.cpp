@@ -9,6 +9,7 @@
 #include "stb_image.h"
 #include "shader.h"
 #include "camera.h"
+#include "light.h"
 
 #define SCR_WIDTH 800.0f
 #define SCR_HEIGHT 600.0f
