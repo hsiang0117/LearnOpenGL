@@ -3,34 +3,85 @@
 
 #include <glm/glm.hpp>
 
-typedef struct DirLight
-{
-    glm::vec3 direction;
-    glm::vec3 color;
-    float ambient;
-    float diffuse;
-    float specular;
+const float vertices[] = {
+	-0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f,  0.5f, -0.5f,
+	0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+
+	-0.5f, -0.5f,  0.5f,
+	0.5f, -0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,
+
+	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+
+	0.5f,  0.5f,  0.5f,
+	0.5f,  0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,
+
+	-0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f,  0.5f,
+	0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f, -0.5f,
+
+	-0.5f,  0.5f, -0.5f,
+	0.5f,  0.5f, -0.5f,
+	0.5f,  0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f, -0.5f,
+};
+
+typedef struct DirLight {
+	glm::vec3 direction;
+	glm::vec3 color;
+	float ambient;
+	float diffuse;
+	float specular;
 }DirLight;
 
 typedef struct PointLight {
-    glm::vec3 position;
-    glm::vec3 color;
-    float ambient;
-    float diffuse;
-    float specular;
-    float constant;
-    float linear;
-    float quadratic;
+	glm::vec3 position;
+	glm::vec3 color;
+	float ambient;
+	float diffuse;
+	float specular;
+	float constant;
+	float linear;
+	float quadratic;
 }PointLight;
 
 typedef struct SpotLight {
-    glm::vec3 position;
-    glm::vec3 color;
-    glm::vec3 direction;
-    float phi;
-    float ambient;
-    float diffuse;
-    float specular;
+	glm::vec3 position;
+	glm::vec3 color;
+	glm::vec3 direction;
+	float phi;
+	float ambient;
+	float diffuse;
+	float specular;
 }SpotLight;
+
+//class PointLight
+//{
+//public:
+//
+//private:
+//
+//};
 
 #endif // !LIGHT_H
