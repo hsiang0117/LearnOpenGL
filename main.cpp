@@ -126,18 +126,15 @@ int main() {
 	glBindVertexArray(0);
 
 	glm::vec3 lightColor(2.0f, 2.0f, 2.0f);
+	std::vector<PointLight>pointLight;
+	PointLight pointLight0(lightColor, 0.2f, 0.5f, 1.0f, glm::vec3(0.0f, 0.0f, 2.0f), 1.0f, 0.14f, 0.07f);
+	PointLight pointLight1(lightColor, 0.2f, 0.5f, 1.0f, glm::vec3(0.0f, 0.0f, 2.0f), 1.0f, 0.14f, 0.07f);
+	pointLight.push_back(pointLight0);
+	pointLight.push_back(pointLight1);
 
 	cubeShader.use();
 	set_material(cubeShader, "./resources/container2.png", "./resources/container2_specular.png", 32);
-	cubeShader.setVec3("pointLight[0].color", lightColor);
-	cubeShader.setFloat("pointLight[0].ambient", 0.2f);
-	cubeShader.setFloat("pointLight[0].diffuse", 0.5f);
-	cubeShader.setFloat("pointLight[0].specular", 1.0f);
-	cubeShader.setFloat("pointLight[0].constant", 1.0f);
-	cubeShader.setFloat("pointLight[0].linear", 0.14f);
-	cubeShader.setFloat("pointLight[0].quadratic", 0.07f);
-	cubeShader.setInt("dirLightAmount", 0);
-	cubeShader.setInt("pointLightAmount", 1);
+	set_pointLight(cubeShader, pointLight);
 	lightShader.use();
 	lightShader.setVec3("lightColor", lightColor);
 
@@ -145,16 +142,17 @@ int main() {
 
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
-		glClearColor(0.2f, 0.2f, 0.1f, 1.0f);
+		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 view = camera.getViewMat();
 		glm::mat4 projection = camera.getProjectionMat(SCR_WIDTH, SCR_HEIGHT);
 		float time = glfwGetTime();
 		glm::vec3 lightPosition = glm::vec3(2 * glm::sin(time), glm::sin(time), 2 * glm::cos(time));
+		pointLight[0].position = lightPosition;
 
 		cubeShader.use();
-		cubeShader.setVec3("pointLight[0].position", lightPosition);
+		cubeShader.setVec3("pointLight[0].position", pointLight[0].position);
 		cubeShader.setVec3("cameraPos", camera.getCameraPos());
 
 		glBindVertexArray(cubeVAO);
@@ -173,11 +171,13 @@ int main() {
 		glBindVertexArray(lightVAO);
 		lightShader.setMat4("view", view);
 		lightShader.setMat4("projection", projection);
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPosition);
-		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
-		lightShader.setMat4("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		for (int i = 0; i < pointLight.size(); i++) {
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, pointLight[i].position);
+			model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+			lightShader.setMat4("model", model);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 		glBindVertexArray(0);
 
 		camera.updateDeltaTime();

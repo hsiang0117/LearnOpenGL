@@ -30,6 +30,9 @@
     <ClCompile Include="camera.cpp">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>头文件\items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">

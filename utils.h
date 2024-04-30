@@ -1,11 +1,15 @@
+#include <string>
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
+#include <vector>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "shader.h"
+#include "light.h"
 
 unsigned int load_texture(const char* path)
 {
+	stbi_set_flip_vertically_on_load(true);
 	unsigned int texture;
 	glGenTextures(1, &texture);
 	int width, height, nrChannels;
@@ -49,3 +53,47 @@ void set_material(Shader shader, const char* diffuse, const char* specular, cons
 	shader.setFloat("material.shininess", shininess);
 }
 
+void set_pointLight(Shader shader, std::vector<PointLight> pointLight) {
+	if (pointLight.size() > 9) {
+		std::cout << "Too many point light source";
+	}
+	else {
+		for (int i = 0; i < pointLight.size(); i++) {
+			shader.setVec3("pointLight[" + std::to_string(i) + "].color", pointLight[i].color);
+			shader.setVec3("pointLight[" + std::to_string(i) + "].position", pointLight[i].position);
+			shader.setFloat("pointLight[" + std::to_string(i) + "].ambient", pointLight[i].ambient);
+			shader.setFloat("pointLight[" + std::to_string(i) + "].diffuse", pointLight[i].diffuse);
+			shader.setFloat("pointLight[" + std::to_string(i) + "].specular", pointLight[i].specular);
+			shader.setFloat("pointLight[" + std::to_string(i) + "].constant", pointLight[i].constant);
+			shader.setFloat("pointLight[" + std::to_string(i) + "].linear", pointLight[i].linear);
+			shader.setFloat("pointLight[" + std::to_string(i) + "].quadratic", pointLight[i].quadratic);
+			shader.setInt("pointLightAmount", pointLight.size());
+		}
+	}
+}
+
+void set_dirLight(Shader shader, std::vector<DirLight> dirLight) {
+	if (dirLight.size() > 9) {
+		std::cout << "Too many direct light source";
+	}
+	else {
+		for (int i = 0; i < dirLight.size(); i++) {
+			shader.setVec3("dirLight[" + std::to_string(i) + "].color", dirLight[i].color);
+			shader.setVec3("dirLight[" + std::to_string(i) + "].direction", dirLight[i].direction);
+			shader.setFloat("dirLight[" + std::to_string(i) + "].ambient", dirLight[i].ambient);
+			shader.setFloat("dirLight[" + std::to_string(i) + "].diffuse", dirLight[i].diffuse);
+			shader.setFloat("dirLight[" + std::to_string(i) + "].specular", dirLight[i].specular);
+			shader.setInt("dirLightAmount", dirLight.size());
+		}
+	}
+}
+
+void set_spotLight(Shader shader, SpotLight spotLight) {
+	shader.setVec3("spotLight.color", spotLight.color);
+	shader.setVec3("spotLight.position", spotLight.position);
+	shader.setFloat("spotLight.ambient", spotLight.ambient);
+	shader.setFloat("spotLight.diffuse", spotLight.diffuse);
+	shader.setFloat("spotLight.specular", spotLight.specular);
+	shader.setVec3("spotLight.direction", spotLight.direction);
+	shader.setFloat("spotLight.phi", spotLight.phi);
+}
