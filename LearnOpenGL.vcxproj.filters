@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\items">
-      <UniqueIdentifier>{ab924e7e-a26d-4bcd-a4ad-4bcdea70035f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\shaders">
       <UniqueIdentifier>{e517abcd-5073-43e9-b62b-cbea08b8fa82}</UniqueIdentifier>
     </Filter>
@@ -30,9 +27,6 @@
     <ClCompile Include="camera.cpp">
       <Filter>头文件</Filter>
     </ClCompile>
-    <ClCompile Include="light.cpp">
-      <Filter>头文件\items</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -41,14 +35,11 @@
     <ClInclude Include="shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>头文件\items</Filter>
+    <ClInclude Include="camera.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,10 @@
 #include <string>
-#include <GLFW/glfw3.h>
-#include <GL/glew.h>
+#include <glfw3.h>
+#include <glew.h>
 #include <vector>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "shader.h"
-#include "light.h"
 
 unsigned int load_texture(const char* path)
 {
@@ -32,6 +31,13 @@ unsigned int load_texture(const char* path)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		//各向异性过滤
+		if (glewIsSupported("GL_EXT_texture_filter_anisotropic")) {
+			float anisoSetting = 0.0f;
+			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoSetting);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoSetting);
+		}
 	}
 	else {
 		std::cout << "Load texture failed" << std::endl;

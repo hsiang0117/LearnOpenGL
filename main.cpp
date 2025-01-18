@@ -1,5 +1,5 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <glew.h>
+#include <glfw3.h>
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -7,7 +7,7 @@
 
 #include "shader.h"
 #include "camera.h"
-#include "light.h"
+#include "models.hpp"
 #include "utils.h"
 
 #define SCR_WIDTH 800.0f
